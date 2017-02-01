@@ -1,48 +1,75 @@
 //DinnerModel Object constructor
 var DinnerModel = function() {
  
-	//TODO Lab 2 implement the data structure that will hold number of guest
-	// and selected dinner options for dinner menu
+	this.numOfGuests = 0;
+	this.selectedMenu = [];
 
 
 	this.setNumberOfGuests = function(num) {
-		//TODO Lab 2
+		this.numOfGuests = num;
 	}
 
 	// should return 
 	this.getNumberOfGuests = function() {
-		//TODO Lab 2
+		return this.numOfGuests;
 	}
 
 	//Returns the dish that is on the menu for selected type 
 	this.getSelectedDish = function(type) {
-		//TODO Lab 2
+		for (var i = 0; i < this.selectedMenu.length; i++) {
+			if (this.selectedMenu[i].type == type) {
+				return this.selectedMenu[i];
+			}
+		}
+		return undefined;
 	}
 
 	//Returns all the dishes on the menu.
 	this.getFullMenu = function() {
-		//TODO Lab 2
+		return this.selectedMenu;
 	}
 
 	//Returns all ingredients for all the dishes on the menu.
 	this.getAllIngredients = function() {
-		//TODO Lab 2
+		var ingredients = [];
+		for (var i = 0; i < this.selectedMenu.length; i++) {
+			ingredients = ingredients.concat(this.selectedMenu[i].ingredients);
+		}
+		return ingredients;
 	}
 
 	//Returns the total price of the menu (all the ingredients multiplied by number of guests).
 	this.getTotalMenuPrice = function() {
-		//TODO Lab 2
+		var price = 0;
+		var ingredients = this.getAllIngredients();
+		for (var i = 0; i < ingredients.length; i++) {
+			price = ingredients[i].price + price;
+		}
+		return price * this.getNumberOfGuests();
 	}
 
 	//Adds the passed dish to the menu. If the dish of that type already exists on the menu
 	//it is removed from the menu and the new one added.
 	this.addDishToMenu = function(id) {
-		//TODO Lab 2 
+		var newDish = this.getDish(id)
+		var oldDish = this.getSelectedDish(newDish.type)
+		if (oldDish != undefined) {
+			this.removeDishFromMenu(oldDish.id);
+		}
+		this.selectedMenu.push(newDish);
 	}
 
 	//Removes dish from menu
 	this.removeDishFromMenu = function(id) {
-		//TODO Lab 2
+		var removeIndex = -1;
+		for (var i = 0; i < this.selectedMenu.length; i++) {
+			if (this.selectedMenu[i].id == id) {
+				removeIndex = i;
+			}
+		}
+		if(removeIndex > -1) {
+			this.selectedMenu.splice(removeIndex, 1);
+		}
 	}
 
 	//function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")
