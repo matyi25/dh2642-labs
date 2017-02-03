@@ -4,7 +4,6 @@ var DinnerModel = function() {
 	this.numOfGuests = 0;
 	this.selectedMenu = [];
 
-
 	this.setNumberOfGuests = function(num) {
 		this.numOfGuests = num;
 	}
