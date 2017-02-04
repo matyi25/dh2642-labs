@@ -17,6 +17,7 @@ $(function() {
 	console.log(model.getTotalMenuPrice());
 
 	//And create the needed controllers and views
-	var exampleView = new ExampleView($("#exampleView"));
+	var firstView = new FirstView($("#firstView"));
+	var secondView = new SecondView($("#secondView"), model);
 
 });
