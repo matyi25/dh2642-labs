@@ -20,5 +20,6 @@ $(function() {
 	var firstView = new FirstView($("#firstView"));
 	var secondView = new SecondView($("#secondView"), model);
 	var fifthView = new FifthView($("#fifthViewHeader"), $("#fifthViewDishes"), model);
+	var sixthView = new SixthView($("#sixthViewHeader"), $("#sixthViewDishes"), model);
 
 });
