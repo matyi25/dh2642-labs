@@ -19,5 +19,6 @@ $(function() {
 	//And create the needed controllers and views
 	var firstView = new FirstView($("#firstView"));
 	var secondView = new SecondView($("#secondView"), model);
+	var fifthView = new FifthView($("#fifthViewHeader"), $("#fifthViewDishes"), model);
 
 });
