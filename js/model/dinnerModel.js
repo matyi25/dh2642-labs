@@ -42,9 +42,9 @@ var DinnerModel = function() {
 		var price = 0;
 		var ingredients = this.getAllIngredients();
 		for (var i = 0; i < ingredients.length; i++) {
-			price = ingredients[i].price + price;
+			price = (ingredients[i].price * this.getNumberOfGuests()) + price;
 		}
-		return price * this.getNumberOfGuests();
+		return price;
 	}
 
 	//Adds the passed dish to the menu. If the dish of that type already exists on the menu

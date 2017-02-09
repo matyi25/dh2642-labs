@@ -19,7 +19,10 @@ $(function() {
 	//And create the needed controllers and views
 	var firstView = new FirstView($("#firstView"));
 	var secondView = new SecondView($("#secondView"), model);
+	var thirdView = new ThirdView($("#filteredDishes"), $("#inputDish"), model);
+	var fourthView = new FourthView($("#dishOverview"), $("#dishIngredients"), $("#dishPreparation"), $("#totalPrice"), model);
 	var fifthView = new FifthView($("#fifthViewHeader"), $("#fifthViewDishes"), model);
 	var sixthView = new SixthView($("#sixthViewHeader"), $("#sixthViewDishes"), model);
+	
 
 });

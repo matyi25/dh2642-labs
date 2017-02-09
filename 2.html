@@ -10,8 +10,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dinner planner</title>
+    <title>Second view</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="custom.css">
   </head>
   
   <body>
@@ -21,15 +22,15 @@
           
           <div class="row">
             <div class="col-md-12">
-                <h3>My Dinner</h3>
+                <h2>My Dinner</h2>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-3">
               <h4>People:</h4>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
               <div class="input-group spinner">
                 <input type="text" class="form-control" value="1" min="0" max="5" id="numberOfGuests">
                 <div class="input-group-btn-vertical">
@@ -45,24 +46,24 @@
             <div class="col-md-5"></div>
           </div>
 
-          <div class="row">
+          <div class="row" id="dishNameRow">
             <div class="col-md-6">
-              <h3>Dish Name</h3>
+              <h4>Dish Name</h4>
             </div>
             <div class="col-md-6">
-              <h3>Cost</h3>
+              <h4>Cost</h4>
             </div>
           </div>
 
           <div class="row">
             <div class="col-md-6">
-              <h3>Pending</h3>
+              <h4>Pending</h4>
             </div>
             <div class="col-md-3">
-              <h3 id="pendingCost">0.00</h3>
+              <h4 id="pendingCost">0.00</h4>
             </div>
             <div class="col-md-3">
-              <h3>SEK</h3>
+              <h4>SEK</h4>
             </div>
           </div>
 
@@ -72,18 +73,19 @@
 
           <div class="row">
             <div class="col-md-6">
-              <h3></h3>
+              <h4></h4>
             </div>
             <div class="col-md-3">
-              <h3 id="totalCost">0.00</h3>
+              <h4 id="totalCost">0.00</h4>
             </div>
             <div class="col-md-3">
-              <h3>SEK</h3>
+              <h4>SEK</h4>
             </div>
           </div>
+          <div class="row"><p></p></div>
 
-          <div class="row" style="text-align: right">
-            <a class="btn btn-primary">Go back and edit</a>
+          <div class="row" style="text-align: center">
+            <a class="btn btn-primary" id="confirmDinnerBtn">Confirm Dinner</a>
           </div>
 
         </div>
@@ -95,11 +97,13 @@
     <!-- Bootstrap JavaScript, needed if you want for instance tabs, models, popovers etc. -->
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 
-  <!-- The application JavaScript code -->
+<!-- The application JavaScript code -->
   <script src="js/app.js"></script>
   <script src="js/model/dinnerModel.js"></script>
-  <script src="js/view/secondView.js"></script>
   <script src="js/view/firstView.js"></script>
+  <script src="js/view/secondView.js"></script>
+  <script src="js/view/thirdView.js"></script>
+  <script src="js/view/fourthView.js"></script>
   <script src="js/view/fifthView.js"></script>
   <script src="js/view/sixthView.js"></script>
   <script src="js/view/exampleViewController.js"></script>

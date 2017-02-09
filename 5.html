@@ -3,16 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fifth view</title>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
     rel="stylesheet" type="text/css">
     <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
     rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="custom.css">
   </head>
   
   <body>
-    <div class="section">
+    <div class="section" id="selectDishSection">
       <div class="container" id="fifthViewHeader">
         <div class="row">
           <div class="col-md-6">
@@ -27,7 +29,7 @@
             </div>
           </div>
           <div class="col-md-6" style="text-align: right">
-            <a class="btn btn-primary">Go back and edit</a>
+            <a class="btn btn-primary" id="backButton">Go back and edit</a>
           </div>
         </div>
       </div>
@@ -42,8 +44,8 @@
       </div>
     </div>
     
-    <div class="row" style="text-align: center">
-      <a class="btn btn-primary">Print Full recipe</a>
+    <div class="row" style="text-align: center" align="bottom">
+      <a class="btn btn-primary" id="printButton">Print Full recipe</a>
     </div>
   </body>
         <!-- jQuery -->
@@ -54,8 +56,10 @@
   <!-- The application JavaScript code -->
   <script src="js/app.js"></script>
   <script src="js/model/dinnerModel.js"></script>
-  <script src="js/view/secondView.js"></script>
   <script src="js/view/firstView.js"></script>
+  <script src="js/view/secondView.js"></script>
+  <script src="js/view/thirdView.js"></script>
+  <script src="js/view/fourthView.js"></script>
   <script src="js/view/fifthView.js"></script>
   <script src="js/view/sixthView.js"></script>
   <script src="js/view/exampleViewController.js"></script>
