@@ -3,9 +3,33 @@ var DinnerModel = function() {
  
 	this.numOfGuests = 0;
 	this.selectedMenu = [];
+	this.observers = [];
+	this.pendingDishId = undefined;
+
+
+
+	this.addObserver = function(observer) {
+		this.observers.push(observer);
+	}
+
+	this.notifyObservers = function(obj) {
+		for (var i = 0; i < this.observers.length; i++) {
+			this.observers[i].update(obj);
+		}
+	}
+
+	this.setPendingDishId =  function(id) {
+		this.pendingDishId = id;
+		this.notifyObservers(this.pendingDishId);
+	}
+
+	this.getPendingDishId = function() {
+		return this.pendingDishId;
+	}
 
 	this.setNumberOfGuests = function(num) {
 		this.numOfGuests = num;
+		this.notifyObservers(this.numOfGuests);
 	}
 
 	// should return 
@@ -56,6 +80,7 @@ var DinnerModel = function() {
 			this.removeDishFromMenu(oldDish.id);
 		}
 		this.selectedMenu.push(newDish);
+		this.notifyObservers(this.selectedMenu);
 	}
 
 	//Removes dish from menu
@@ -69,6 +94,7 @@ var DinnerModel = function() {
 		if(removeIndex > -1) {
 			this.selectedMenu.splice(removeIndex, 1);
 		}
+		this.notifyObservers(this.selectedMenu);
 	}
 
 	//function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")
