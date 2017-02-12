@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<style>
+  	body {
+  		margin:0;
+  		background: url('images/background.jpg');
+  		background-size: cover;
+  		background-repeat: no-repeat;
+  		display: compact;} 		
+  	}
+  	</style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Homelette</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+    rel="stylesheet" type="text/css">
+    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+    rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="custom.css">
+
+  </head>
+  <body id="indexBody">
+    <div class="section" id="mainHeader">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div>
+              <h1><b>Homelette</b>&nbsp;&nbsp;&nbsp;
+                <small style="color:#000000"><i>From the best chefs in the world directly to your kitchen<i></small>
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+	<!-- FirstView -->
+    <div class="section" id="firstView">
+     	<div class="section">
+      		<div class="container-fluid"></div>
+    	</div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6" id="introBlock">
+            <h1>A Home dinner service</h1>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
+              ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
+              dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies
+              nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+              Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In
+              enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
+              felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus
+              elementum semper nisi.</p>
+              <br>
+            <h3>Quickly start</h3>
+            <a class="btn btn-primary" id="createNewDinnerBtn"><b>Create new dinner!</b></a>
+            <p><br></p>
+          </div>
+          <div class="col-md-6"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MainScreen -->
+    <div class="section" id="mainScreen" style="display:none">
+      <div class="container-fluid">
+        
+        <!-- SecondView -->
+        <div class="col-md-3" id="secondView" style="display:none">
+          <div class="row">
+            <div class="col-md-12">
+                <h2>My Dinner</h2>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <h4>People:</h4>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group spinner">
+                <input type="text" class="form-control" value="1" min="0" max="5" id="numberOfGuests">
+                <div class="input-group-btn-vertical">
+                  <button class="btn btn-default" type="button" id="addNumberOfGuestsBtn">
+                    <i class="fa fa-caret-up"></i>
+                  </button>
+                  <button class="btn btn-default" type="button" id="subNumberOfGuestsBtn">
+                    <i class="fa fa-caret-down"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5"></div>
+          </div>
+
+          <div class="row" id="dishNameRow">
+            <div class="col-md-6">
+              <h4>Dish Name</h4>
+            </div>
+            <div class="col-md-6">
+              <h4>Cost</h4>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Pending</h4>
+            </div>
+            <div class="col-md-3">
+              <h4 id="pendingCost">0.00</h4>
+            </div>
+            <div class="col-md-3">
+              <h4>SEK</h4>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="horizontalLine" style="border: 1px solid black;"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h4></h4>
+            </div>
+            <div class="col-md-3">
+              <h4 id="totalCost">0.00</h4>
+            </div>
+            <div class="col-md-3">
+              <h4>SEK</h4>
+            </div>
+          </div>
+          <div class="row"><p></p></div>
+
+          <div class="row" style="text-align: center">
+            <a class="btn btn-primary" id="confirmDinnerBtn">Confirm Dinner</a>
+          </div>
+
+        </div>
+        <!-- ThirdView -->
+        <div class="col-md-9" id="selectDishColumn" style="display:none">
+        	<div id="thirdView" style="display:none">
+	        	<div class="section" id="selectDishSection">
+	      			<div class="container">
+	        			<div class="row">
+	          				<div class="col-md-12">
+	            				<h1>Select dish</h1>
+	          				</div>
+	        			</div>
+
+					        <div class="row" id="inputDish">
+					          <div class="col-md-3">
+					              <div class="form-group">
+					                <div class="input-group">
+					                  <input id="dishName" type="text" class="form-control" placeholder="Enter key words">
+					                  <span class="input-group-btn">
+					                    <a class="btn btn-success" id="searchBtn" type="submit">Search</a>
+					                  </span>
+					                </div>
+					              </div>
+					          </div>
+
+				          <div class="col-md-3">
+				            <form>
+				              <div class="form-group">
+				                <select class="form-control" id="dishType" placeholder="Enter key words">
+				                </select>
+				              </div>
+				            </form> 
+				          </div>
+				        </div>
+			      	</div>
+		    	</div>
+
+			    <div class="section">
+			      <div class="container">
+			        <div class="row" id="filteredDishes"></div>
+			      </div>
+			    </div>
+			</div>
+
+			<!-- FourthView -->
+			<div id="fourthView" style="display: none">
+				<div class="section">
+			      <div class="container">
+			        <div class="row">
+			          <div class="col-md-6">
+			            <div class="row" id="dishOverview">
+			            </div>
+			            <div><p></p></div>
+			            <div class="row">
+			              <div class="col-md-6"><a class="btn btn-primary" id="backButton">Back to select dish</a></div>
+			            </div>
+			          </div>
+			          <div class="col-md-6"  style="background-color: #ffe680">
+			            <div class="row" id="dishIngredients">
+			            </div>
+			            <div><p><br></p></div>
+			            <div class="row">
+			              <div class="col-md-6"><a class="btn btn-primary" id="confirmButton">Confirm dish</a></div>
+			              <div class="col-md-5" id="totalPrice" style="text-align:right"></div>
+			            </div>
+			            <div><p></p></div>
+			          </div>
+			        </div>
+			      </div>
+			    </div>
+			    <div class="section">
+			      <div class="container">
+			        <div class="row" id="dishPreparation">
+			        </div>
+			      </div>
+			    </div>
+			</div>
+		</div>
+      </div>
+
+      <!-- FifthView -->
+    <div id="fifthView" style="display:none">
+     	<div class="section" id="selectDishSection">
+	      <div class="container" id="fifthViewHeader">
+	        <div class="row">
+	          <div class="col-md-6">
+	            <div class="col-md-5">
+	              <h1>My Dinner:</h1>
+	            </div>
+	            <div class="col-md-1">
+	              <h1 id="numberOfGuests">0</h1>
+	            </div>
+	            <div class="col-md-6">
+	              <h1>people</h1>
+	            </div>
+	          </div>
+	          <div class="col-md-6" style="text-align: right">
+	            <a class="btn btn-primary" id="backButton">Go back and edit</a>
+	          </div>
+	        </div>
+	      </div>
+	  	</div>
+
+	    <div class="section">
+	      <div class="container">
+
+	        <div class="row" id="fifthViewDishes">
+
+	        </div>
+	      </div>
+	    </div>
+	    
+	    <div class="row" style="text-align: center" align="bottom">
+	      <a class="btn btn-primary" id="printButton">Print Full recipe</a>
+	    </div>
+	</div>
+   </div>
+
+  </body>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Bootstrap JavaScript, needed if you want for instance tabs, models, popovers etc. -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+	<!-- The application JavaScript code -->
+  <script src="js/app.js"></script>
+  <script src="js/model/dinnerModel.js"></script>
+  <script src="js/view/firstView.js"></script>
+  <script src="js/view/secondView.js"></script>
+  <script src="js/view/thirdView.js"></script>
+  <script src="js/view/fourthView.js"></script>
+  <script src="js/view/fifthView.js"></script>
+  <script src="js/view/sixthView.js"></script>
+  <script src="js/view/mainController.js"></script>
+  <script src="js/view/firstViewController.js"></script>
+  <script src="js/view/secondViewController.js"></script>
+  <script src="js/view/thirdViewController.js"></script>
+</html>

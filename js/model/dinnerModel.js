@@ -6,8 +6,6 @@ var DinnerModel = function() {
 	this.observers = [];
 	this.pendingDishId = undefined;
 
-
-
 	this.addObserver = function(observer) {
 		this.observers.push(observer);
 	}
@@ -16,6 +14,16 @@ var DinnerModel = function() {
 		for (var i = 0; i < this.observers.length; i++) {
 			this.observers[i].update(obj);
 		}
+	}
+
+	this.getAllDishesType = function () {
+		dishesTypes = [];
+		for (var i = 0; i < dishes.length; i++) {
+		 	if (dishesTypes.indexOf(dishes[i].type) < 0) {
+		 		dishesTypes.push(dishes[i].type);
+		 	}
+		}
+		return dishesTypes;
 	}
 
 	this.setPendingDishId =  function(id) {

@@ -10,6 +10,11 @@ $(function() {
 	var fifthView = new FifthView($("#fifthViewHeader"), $("#fifthViewDishes"), model);
 	var sixthView = new SixthView($("#sixthViewHeader"), $("#sixthViewDishes"), model);
 
+	var mainController = new MainController($("#indexBody"), $("#firstView"),$("#secondView"), $("#thirdView"), $("#fourthView"), $("#fifthView"), model);
+	var firstViewController = new FirstViewController(model, $("#firstView"));
+	var secondViewController = new SecondViewController(model, $("#secondView"));
+	var thirdViewController = new ThirdViewController(model, $("#thirdView"));
+
 	model.setNumberOfGuests(6);
 	console.log(model.getNumberOfGuests());
 
