@@ -10,10 +10,11 @@ $(function() {
 	var fifthView = new FifthView($("#fifthViewHeader"), $("#fifthViewDishes"), model);
 	var sixthView = new SixthView($("#sixthViewHeader"), $("#sixthViewDishes"), model);
 
-	var mainController = new MainController($("#indexBody"), $("#firstView"),$("#secondView"), $("#thirdView"), $("#fourthView"), $("#fifthView"), model);
+	var mainController = new MainController($("#indexBody"), $("#firstView"),$("#secondView"), $("#thirdView"), $("#fourthView"), $("#fifthView"), $("#sixthView"), model);
 	var firstViewController = new FirstViewController(model, $("#firstView"));
 	var secondViewController = new SecondViewController(model, $("#secondView"));
 	var thirdViewController = new ThirdViewController(model, $("#thirdView"));
-	var fourthViewController = new FourthViewController(model, $("#thirdView"));
-	
+	var fourthViewController = new FourthViewController(model, $("#fourthView"));
+	var fifthViewController = new FifthViewController(model, $("#fifthView"));
+	var sixthViewController = new SixthViewController(model, $("#sixthView"));
 });

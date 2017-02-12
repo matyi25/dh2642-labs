@@ -1,4 +1,4 @@
-var MainController = function(mainBody, firstView, secondView, thirdView, fourthView, fifthView, model) {
+var MainController = function(mainBody, firstView, secondView, thirdView, fourthView, fifthView, sixthView, model) {
 	var self = this;
 
 	this.setFilteredDishHandlers = function() {
@@ -44,6 +44,22 @@ var MainController = function(mainBody, firstView, secondView, thirdView, fourth
  		thirdView.css("display", "block");
  		fourthView.css("display", "none");	
  	})
+
+ 	fifthView.find("#backButton").click(function() {
+ 		thirdView.css("display", "block");
+ 		secondView.css("display", "block");
+ 		fifthView.css("display", "none");
+ 	});
+
+ 	fifthView.find("#printButton").click(function() {
+ 		sixthView.css("display", "block");
+ 		fifthView.css("display", "none");
+ 	});
+
+ 	sixthView.find("#backButton").click(function() {
+ 		fifthView.css("display", "block");
+ 		sixthView.css("display", "none");
+ 	});
 
 
 }
