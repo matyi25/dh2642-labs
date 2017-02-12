@@ -14,17 +14,6 @@ $(function() {
 	var firstViewController = new FirstViewController(model, $("#firstView"));
 	var secondViewController = new SecondViewController(model, $("#secondView"));
 	var thirdViewController = new ThirdViewController(model, $("#thirdView"));
-
-	model.setNumberOfGuests(6);
-	console.log(model.getNumberOfGuests());
-
-	model.addDishToMenu(1);
-	console.log(model.getFullMenu());
-
-	model.setPendingDishId(2);
-
-	model.addDishToMenu(2);
-
-	model.addDishToMenu(100);
+	var fourthViewController = new FourthViewController(model, $("#thirdView"));
 	
 });

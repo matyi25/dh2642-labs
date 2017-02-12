@@ -3,9 +3,9 @@ var MainController = function(mainBody, firstView, secondView, thirdView, fourth
 
 	this.setFilteredDishHandlers = function() {
  		thirdView.find("#filteredDishes").find("img").click(function() {
- 		model.setPendingDishId(this.id);
  		thirdView.css("display", "none");
  		fourthView.css("display", "block");
+ 		model.setPendingDishId(this.id);
  	})
  	}
 
@@ -25,11 +25,24 @@ var MainController = function(mainBody, firstView, secondView, thirdView, fourth
  		thirdView.css("display", "none");
  		fourthView.css("display", "none");	
  		fifthView.css("display", "block");
-
  	});
 
  	thirdView.find("#filteredDishes").bind("contentchanged", function() {
  		self.setFilteredDishHandlers();
+ 	});
+
+ 	fourthView.find("#backButton").click(function() {
+ 		thirdView.css("display", "block");
+ 		fourthView.css("display", "none");
+ 		model.setPendingDishId(undefined);
+ 	});
+
+ 	fourthView.find("#confirmButton").click(function() {
+ 		model.addDishToMenu(model.getPendingDishId());
+ 		model.setPendingDishId(undefined);
+
+ 		thirdView.css("display", "block");
+ 		fourthView.css("display", "none");	
  	})
 
 
