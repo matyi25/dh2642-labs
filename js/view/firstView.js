@@ -1,5 +1,0 @@
-var FirstView = function (container) {
-
-	
-}
- 

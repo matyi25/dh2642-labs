@@ -1,5 +1,11 @@
-var FourthView = function (dishOverviewContainer, dishIngredientsContainer, dishPreparationContainer, totalPriceContainer, model) {
+var DishDetailsView = function (container,  model) {
 	
+	var dishDetailsViewContainer = container;
+
+	this.getView = function() {
+		return dishDetailsViewContainer;
+	}
+
 	this.update = function(obj) {
 
 		var dish = model.getDish(model.getPendingDishId());
@@ -7,10 +13,10 @@ var FourthView = function (dishOverviewContainer, dishIngredientsContainer, dish
 	  		var dishName = dish.name;
 			var numOfGuests = model.getNumberOfGuests();
 
-			dishOverviewContainer.empty();
-			dishIngredientsContainer.empty();
-			dishPreparationContainer.empty();
-			totalPriceContainer.empty();
+			dishDetailsViewContainer.find("#dishOverview").empty();
+			dishDetailsViewContainer.find("#dishIngredients").empty();
+			dishDetailsViewContainer.find("#dishPreparation").empty();
+			dishDetailsViewContainer.find("#totalPrice").empty();
 
 
 			var dishOverviewSection = "<div class=\"col-md-12\" style=\"text-align: left\">\
@@ -19,7 +25,7 @@ var FourthView = function (dishOverviewContainer, dishIngredientsContainer, dish
 			class=\"img-responsive\">\
 			<p>Some other stuff</p>\
 			</div>"
-			dishOverviewContainer.append(dishOverviewSection);
+			dishDetailsViewContainer.find("#dishOverview").append(dishOverviewSection);
 
 			var totalPrice = 0;
 
@@ -37,8 +43,8 @@ var FourthView = function (dishOverviewContainer, dishIngredientsContainer, dish
 				 <div class=\"col-md-2\" style=\"text-align: center\">" + dish.ingredients[i].price*numOfGuests + "</div>\</div>"
 			};
 
-			dishIngredientsContainer.append(dishIngredientsSection);
-			totalPriceContainer.append("<b>SEK " + totalPrice +"</b>");
+			dishDetailsViewContainer.find("#dishIngredients").append(dishIngredientsSection);
+			dishDetailsViewContainer.find("#totalPrice").append("<b>SEK " + totalPrice +"</b>");
 
 
 
@@ -46,7 +52,7 @@ var FourthView = function (dishOverviewContainer, dishIngredientsContainer, dish
 			<h1>Preparation</h1>\
 			<p>"+dish.description+"</p>\
 			</div>"
-			dishPreparationContainer.append(dishPreparationSection);
+			dishDetailsViewContainer.find("#dishPreparation").append(dishPreparationSection);
 		}
 	}
 	

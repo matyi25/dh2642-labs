@@ -3,32 +3,41 @@ var DinnerModel = function() {
  
 	this.numOfGuests = 0;
 	this.selectedMenu = [];
-	this.observers = [];
+	var observers = [];
 	this.pendingDishId = undefined;
 
-	this.addObserver = function(observer) {
-		this.observers.push(observer);
-	}
-
-	this.notifyObservers = function(obj) {
-		for (var i = 0; i < this.observers.length; i++) {
-			this.observers[i].update(obj);
+	var notifyObservers = function(obj) {
+		for (var i = 0; i < observers.length; i++) {
+			observers[i].update(obj);
 		}
 	}
 
-	this.getAllDishesType = function () {
+	this.addObserver = function(observer) {
+		observers.push(observer);
+	}
+
+
+	this.getDishesType = function (dishesList) {
 		dishesTypes = [];
-		for (var i = 0; i < dishes.length; i++) {
-		 	if (dishesTypes.indexOf(dishes[i].type) < 0) {
-		 		dishesTypes.push(dishes[i].type);
+		for (var i = 0; i < dishesList.length; i++) {
+		 	if (dishesTypes.indexOf(dishesList[i].type) < 0) {
+		 		dishesTypes.push(dishesList[i].type);
 		 	}
 		}
 		return dishesTypes;
 	}
 
+	this.getAllDishesType = function () {
+		return this.getDishesType(dishes);
+	}
+
+	this.getMenuDishesType = function() {
+		return this.getDishesType(this.selectedMenu);
+	}
+
 	this.setPendingDishId =  function(id) {
 		this.pendingDishId = id;
-		this.notifyObservers(this.pendingDishId);
+		notifyObservers(this.pendingDishId);
 	}
 
 	this.getPendingDishId = function() {
@@ -37,7 +46,7 @@ var DinnerModel = function() {
 
 	this.setNumberOfGuests = function(num) {
 		this.numOfGuests = num;
-		this.notifyObservers(this.numOfGuests);
+		notifyObservers(this.numOfGuests);
 	}
 
 	// should return 
@@ -59,6 +68,7 @@ var DinnerModel = function() {
 	this.getFullMenu = function() {
 		return this.selectedMenu;
 	}
+
 
 	//Returns all ingredients for all the dishes on the menu.
 	this.getAllIngredients = function() {
@@ -85,24 +95,24 @@ var DinnerModel = function() {
 		var newDish = this.getDish(id)
 		var oldDish = this.getSelectedDish(newDish.type)
 		if (oldDish != undefined) {
-			this.removeDishFromMenu(oldDish.id);
+			this.removeDishFromMenu(oldDish.type);
 		}
 		this.selectedMenu.push(newDish);
-		this.notifyObservers(this.selectedMenu);
+		notifyObservers(this.selectedMenu);
 	}
 
 	//Removes dish from menu
-	this.removeDishFromMenu = function(id) {
+	this.removeDishFromMenu = function(type) {
 		var removeIndex = -1;
 		for (var i = 0; i < this.selectedMenu.length; i++) {
-			if (this.selectedMenu[i].id == id) {
+			if (this.selectedMenu[i].type == type) {
 				removeIndex = i;
 			}
 		}
 		if(removeIndex > -1) {
 			this.selectedMenu.splice(removeIndex, 1);
 		}
-		this.notifyObservers(this.selectedMenu);
+		notifyObservers(this.selectedMenu);
 	}
 
 	//function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")

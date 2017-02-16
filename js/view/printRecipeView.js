@@ -1,15 +1,18 @@
-//ExampleView Object constructor
-var SixthView = function (headerContainer, dishesContainer, model) {
+var PrintRecipeView = function (container, model) {
+  var printRecipeView = container;
+
+  this.getView = function() {
+    return printRecipeView;
+  }
 	
   this.updateNumOfGuests = function() {
-      this.numberOfGuests = headerContainer.find("#numberOfGuests");
-      this.numberOfGuests.html(model.getNumberOfGuests());
+      printRecipeView.find("#numberOfGuests").html(model.getNumberOfGuests());
   }
 
 
   this.updateMenuView = function(obj) {
+    printRecipeView.find("#printRecipeViewDishes").empty();
 
-    dishesContainer.empty();
   	var fullMenu = model.getFullMenu();
 
   	for (var i = 0; i < fullMenu.length; i++) {
@@ -35,16 +38,13 @@ var SixthView = function (headerContainer, dishesContainer, model) {
           </div>\
           <div class=\"row\"><p></p></div>"
           
-      dishesContainer.append(dishImageSection);
+      printRecipeView.find("#printRecipeViewDishes").append(dishImageSection);
     }
 	}
 
   this.update = function(obj) {
-    if (Number.isInteger(obj)) {
       this.updateNumOfGuests();
-    } else {
       this.updateMenuView();
-    }
   }
 
   model.addObserver(this);

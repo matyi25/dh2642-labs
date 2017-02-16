@@ -1,64 +1,66 @@
-var MainController = function(mainBody, firstView, secondView, thirdView, fourthView, fifthView, sixthView, model) {
+var MainController = function(mainBody, startScreenView, menuSummaryView, filteredDishesView, dishDetailsView, confirmDinnerView, printRecipeView, model) {
 	var self = this;
 
-	this.setFilteredDishHandlers = function() {
- 		thirdView.find("#filteredDishes").find("img").click(function() {
- 		thirdView.css("display", "none");
- 		fourthView.css("display", "block");
- 		model.setPendingDishId(this.id);
- 	})
- 	}
+	var startScreenViewContainer = startScreenView.getView();
+	var menuSummaryViewContainer = menuSummaryView.getView();
+	var filteredDishesViewContainer = filteredDishesView.getView();
+	var dishDetailsViewContainer = dishDetailsView.getView();
+	var confirmDinnerViewContainer = confirmDinnerView.getView();
+	var printRecipeViewContainer = printRecipeView.getView();
 
- 	firstView.find("#createNewDinnerBtn").click(function(){
+ 	startScreenViewContainer.find("#createNewDinnerBtn").click(function(){
  		mainBody.css("background-image","none");
  		mainBody.find("#mainScreen").css("display", "block");
  		mainBody.find("#selectDishColumn").css("display", "block");
 
- 		firstView.css("display", "none");
- 		secondView.css("display", "block");
- 		thirdView.css("display", "block");
- 		self.setFilteredDishHandlers();
+ 		startScreenViewContainer.css("display", "none");
+ 		menuSummaryViewContainer.css("display", "block");
+ 		filteredDishesViewContainer.css("display", "block");
  	});
 
- 	secondView.find("#confirmDinnerBtn").click(function() {
- 		secondView.css("display", "none");
- 		thirdView.css("display", "none");
- 		fourthView.css("display", "none");	
- 		fifthView.css("display", "block");
+ 	menuSummaryViewContainer.find("#confirmDinnerBtn").click(function() {
+ 		menuSummaryViewContainer.css("display", "none");
+ 		filteredDishesViewContainer.css("display", "none");
+ 		dishDetailsViewContainer.css("display", "none");	
+ 		confirmDinnerViewContainer.css("display", "block");
  	});
 
- 	thirdView.find("#filteredDishes").bind("contentchanged", function() {
- 		self.setFilteredDishHandlers();
+ 	filteredDishesViewContainer.find("#filteredDishes").bind("contentchanged", function() {
+ 		filteredDishesViewContainer.find("#filteredDishes").find("img").click(function() {
+ 		filteredDishesViewContainer.css("display", "none");
+ 		dishDetailsViewContainer.css("display", "block");
+ 		model.setPendingDishId(this.id);
+ 	})
  	});
 
- 	fourthView.find("#backButton").click(function() {
- 		thirdView.css("display", "block");
- 		fourthView.css("display", "none");
+ 	dishDetailsViewContainer.find("#backButton").click(function() {
+ 		filteredDishesViewContainer.css("display", "block");
+ 		dishDetailsViewContainer.css("display", "none");
  		model.setPendingDishId(undefined);
  	});
 
- 	fourthView.find("#confirmButton").click(function() {
+ 	dishDetailsViewContainer.find("#confirmButton").click(function() {
  		model.addDishToMenu(model.getPendingDishId());
  		model.setPendingDishId(undefined);
 
- 		thirdView.css("display", "block");
- 		fourthView.css("display", "none");	
+ 		filteredDishesViewContainer.css("display", "block");
+ 		dishDetailsViewContainer.css("display", "none");	
  	})
 
- 	fifthView.find("#backButton").click(function() {
- 		thirdView.css("display", "block");
- 		secondView.css("display", "block");
- 		fifthView.css("display", "none");
+ 	confirmDinnerViewContainer.find("#backButton").click(function() {
+ 		filteredDishesViewContainer.css("display", "block");
+ 		menuSummaryViewContainer.css("display", "block");
+ 		confirmDinnerViewContainer.css("display", "none");
  	});
 
- 	fifthView.find("#printButton").click(function() {
- 		sixthView.css("display", "block");
- 		fifthView.css("display", "none");
+ 	confirmDinnerViewContainer.find("#printButton").click(function() {
+ 		printRecipeViewContainer.css("display", "block");
+ 		confirmDinnerViewContainer.css("display", "none");
  	});
 
- 	sixthView.find("#backButton").click(function() {
- 		fifthView.css("display", "block");
- 		sixthView.css("display", "none");
+ 	printRecipeViewContainer.find("#backButton").click(function() {
+ 		confirmDinnerViewContainer.css("display", "block");
+ 		printRecipeViewContainer.css("display", "none");
  	});
 
 

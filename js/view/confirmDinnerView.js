@@ -1,13 +1,16 @@
-var FifthView = function (headerContainer, dishesContainer, model) {
-  
+var ConfirmDinnerView = function (container, model) {
+  var confirmDinnerView = container;
+
+  this.getView = function () {
+     return confirmDinnerView;
+  }
 
   this.updateNumOfGuests = function() {
-    this.numberOfGuests = headerContainer.find("#numberOfGuests");
-    this.numberOfGuests.html(model.getNumberOfGuests());
+    confirmDinnerView.find("#numberOfGuests").html(model.getNumberOfGuests());
 
   }
  this.updateMenuView = function() {
-    dishesContainer.empty();
+    confirmDinnerView.find("#confirmDinnerViewDishes").empty();
 
     var fullMenu = model.getFullMenu();
     for (var i = 0; i < fullMenu.length; i++) {
@@ -25,7 +28,7 @@ var FifthView = function (headerContainer, dishesContainer, model) {
                 <div class=\"col-md-1\"></div>\
               </div>\
             </div>"
-      dishesContainer.append(dishImageSection);
+      confirmDinnerView.find("#confirmDinnerViewDishes").append(dishImageSection);
     }
 
     if (fullMenu.length != 0) {
@@ -36,17 +39,13 @@ var FifthView = function (headerContainer, dishesContainer, model) {
                 <div class=\"col-md-4\" style=\"text-align: right\">" + model.getTotalMenuPrice() + " SEK</div>\
               </div>\
             </div>"
-      dishesContainer.append(dishPriceSection);
+      confirmDinnerView.find("#confirmDinnerViewDishes").append(dishPriceSection);
     }
   }
 
   this.update = function(obj) {
-    if (Number.isInteger(obj)) {
       this.updateNumOfGuests();
       this.updateMenuView()
-    } else {
-      this.updateMenuView();
-    }
   }
 
   model.addObserver(this);
