@@ -13,6 +13,7 @@ var DinnerModel = function() {
 	var observers = [];
 	this.pendingDishId = undefined;
 	this.pendingDish = undefined;
+	this.pendingDishType = undefined;
 
 	var self = this;
 
@@ -40,9 +41,10 @@ var DinnerModel = function() {
 		return menuDishesTypes;
 	}
 
-	this.setPendingDish =  function(id, dish) {
+	this.setPendingDish =  function(id, dish, type) {
 		this.pendingDishId = id;
 		this.pendingDish = dish;
+		this.pendingDishType = type;
 		notifyObservers(this.pendingDishId);
 	}
 
@@ -52,6 +54,10 @@ var DinnerModel = function() {
 
 	this.getPendingDishId = function() {
 		return this.pendingDishId;
+	}
+
+	this.getPendingDishType = function() {
+		return this.pendingDishType;
 	}
 
 	this.setNumberOfGuests = function(num) {
@@ -67,7 +73,7 @@ var DinnerModel = function() {
 	//Returns the dish that is on the menu for selected type 
 	this.getSelectedDish = function(type) {
 		for (var i = 0; i < this.selectedMenu.length; i++) {
-			if (this.selectedMenu[i].dishTypes[0] == type) {
+			if (this.selectedMenu[i].type == type) {
 				return this.selectedMenu[i];
 			}
 		}
@@ -99,13 +105,14 @@ var DinnerModel = function() {
 		return price;
 	}
 
-	//Adds the passed dish to the menu. If the dish of that type already exists on the menu
+	//Adds the pending dish to the menu. If the dish of that type already exists on the menu
 	//it is removed from the menu and the new one added.
-	this.addDishToMenu = function(id) {
-		var oldDish = this.getSelectedDish(this.pendingDish.dishTypes[0])
+	this.addDishToMenu = function(type) {
+		var oldDish = this.getSelectedDish(type)
 		if (oldDish != undefined) {
-			this.removeDishFromMenu(oldDish.dishTypes[0]);
+			this.removeDishFromMenuType(oldDish.type);
 		}
+		this.pendingDish.type = type;
 		this.selectedMenu.push(this.pendingDish);
 		this.setPendingDish(undefined, undefined);
 		notifyObservers(this.selectedMenu);
@@ -115,7 +122,7 @@ var DinnerModel = function() {
 	this.removeDishFromMenuType = function(type) {
 		var removeIndex = -1;
 		for (var i = 0; i < this.selectedMenu.length; i++) {
-			if (this.selectedMenu[i].dishTypes[0] == type) {
+			if (this.selectedMenu[i].type == type) {
 				removeIndex = i;
 			}
 		}

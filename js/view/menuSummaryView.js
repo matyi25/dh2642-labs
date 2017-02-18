@@ -44,7 +44,7 @@ var MenuSummaryView = function (container, model) {
         var pendingName = "Pending"
 		if (pendingDishId != undefined) {
 			model.getDish(pendingDishId, function(pendingDish) {
-				oldDish = model.getSelectedDish(pendingDish.dishTypes[0]);
+				oldDish = model.getSelectedDish(model.getPendingDishType());
 
 				pendingCost = self.calcPrice(pendingDish);
 				pendingName = pendingDish.title;
