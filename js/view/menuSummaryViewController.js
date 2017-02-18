@@ -16,9 +16,8 @@ var MenuSummaryViewController = function (model, menuSummaryView) {
 	menuSummaryViewContainer.find("#selectedDishesList").bind("contentchanged", function() {
 		var menuDishesList = model.getFullMenu();
 		for (var i = 0; i < menuDishesList.length; i++) {
-			menuSummaryViewContainer.find("#"+menuDishesList[i].type).click(function(id){
-				model.removeDishFromMenu(menuDishesList[i].type);
-				menuSummaryViewContainer.find("#"+menuDishesList[i].type+ "Row").css("display","none");
+			menuSummaryViewContainer.find("#"+menuDishesList[i].id).click(function(id){
+				model.removeDishFromMenuId(this.id);
 			})
 		}
 	});

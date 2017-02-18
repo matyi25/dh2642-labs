@@ -19,21 +19,21 @@ var PrintRecipeView = function (container, model) {
   		var dishImageSection = "<div class=\"row\">\
             <div class=\"col-md-6\">\
               <div class=\"col-md-6\">\
-                <img src=\"images/"+fullMenu[i].image+"\"\
+                <img src=\""+fullMenu[i].image+"\"\
                 class=\"img-responsive\">\
               </div>\
               <div class=\"col-md-6\">\
                 <div class=\"row\">\
-                  <h3>"+fullMenu[i].name+"</h3>\
+                  <h3>"+fullMenu[i].title+"</h3>\
                 </div>\
-                <p>Some other stuff</p>\
+                <p></p>\
               </div>\
             </div>\
             <div class=\"col-md-6\">\
               <div class=\"row\">\
                 <h3>Preparation</h3>\
               </div>\
-              <p>"+fullMenu[i].description+"Some bullshit</p>\
+              <p>"+fullMenu[i].instructions+"Some bullshit</p>\
             </div>\
           </div>\
           <div class=\"row\"><p></p></div>"

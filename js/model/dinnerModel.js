@@ -1,10 +1,20 @@
-//DinnerModel Object constructor
+
 var DinnerModel = function() {
- 
+ 	
+	var apiURL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/";
+	var searchURL = "recipes/search";
+	var recipeInfoStartURL = "recipes/";
+	var recipeInfoEndURL = "/information";
+	var apiKey = "Qu9grxVNWpmshA4Kl9pTwyiJxVGUp1lKzrZjsnghQMkFkfA4LB";
+	var dishesTypes = ["main course", "side dish", "dessert", "appetizer", "salad", "bread", "breakfast", "soup", "beverage", "sauce", "drink"];
+	
 	this.numOfGuests = 0;
 	this.selectedMenu = [];
 	var observers = [];
 	this.pendingDishId = undefined;
+	this.pendingDish = undefined;
+
+	var self = this;
 
 	var notifyObservers = function(obj) {
 		for (var i = 0; i < observers.length; i++) {
@@ -16,28 +26,28 @@ var DinnerModel = function() {
 		observers.push(observer);
 	}
 
-
-	this.getDishesType = function (dishesList) {
-		dishesTypes = [];
-		for (var i = 0; i < dishesList.length; i++) {
-		 	if (dishesTypes.indexOf(dishesList[i].type) < 0) {
-		 		dishesTypes.push(dishesList[i].type);
-		 	}
-		}
+	this.getAllDishesType = function () {
 		return dishesTypes;
 	}
 
-	this.getAllDishesType = function () {
-		return this.getDishesType(dishes);
-	}
-
 	this.getMenuDishesType = function() {
-		return this.getDishesType(this.selectedMenu);
+		menuDishesTypes = [];
+		for (var i = 0; i < this.selectedMenu.length; i++) {
+		 	if (menuDishesTypes.indexOf(this.selectedMenu[i].dishTypes[0]) < 0) {
+		 		menuDishesTypes.push(this.selectedMenu[i].dishTypes[0]);
+		 	}
+		}
+		return menuDishesTypes;
 	}
 
-	this.setPendingDishId =  function(id) {
+	this.setPendingDish =  function(id, dish) {
 		this.pendingDishId = id;
+		this.pendingDish = dish;
 		notifyObservers(this.pendingDishId);
+	}
+
+	this.getPendingDish = function() {
+		return this.pendingDish;
 	}
 
 	this.getPendingDishId = function() {
@@ -57,7 +67,7 @@ var DinnerModel = function() {
 	//Returns the dish that is on the menu for selected type 
 	this.getSelectedDish = function(type) {
 		for (var i = 0; i < this.selectedMenu.length; i++) {
-			if (this.selectedMenu[i].type == type) {
+			if (this.selectedMenu[i].dishTypes[0] == type) {
 				return this.selectedMenu[i];
 			}
 		}
@@ -74,7 +84,7 @@ var DinnerModel = function() {
 	this.getAllIngredients = function() {
 		var ingredients = [];
 		for (var i = 0; i < this.selectedMenu.length; i++) {
-			ingredients = ingredients.concat(this.selectedMenu[i].ingredients);
+			ingredients = ingredients.concat(this.selectedMenu[i].extendedIngredients);
 		}
 		return ingredients;
 	}
@@ -84,7 +94,7 @@ var DinnerModel = function() {
 		var price = 0;
 		var ingredients = this.getAllIngredients();
 		for (var i = 0; i < ingredients.length; i++) {
-			price = (ingredients[i].price * this.getNumberOfGuests()) + price;
+			price = (ingredients[i].amount * this.getNumberOfGuests()) + price;
 		}
 		return price;
 	}
@@ -92,20 +102,33 @@ var DinnerModel = function() {
 	//Adds the passed dish to the menu. If the dish of that type already exists on the menu
 	//it is removed from the menu and the new one added.
 	this.addDishToMenu = function(id) {
-		var newDish = this.getDish(id)
-		var oldDish = this.getSelectedDish(newDish.type)
+		var oldDish = this.getSelectedDish(this.pendingDish.dishTypes[0])
 		if (oldDish != undefined) {
-			this.removeDishFromMenu(oldDish.type);
+			this.removeDishFromMenu(oldDish.dishTypes[0]);
 		}
-		this.selectedMenu.push(newDish);
+		this.selectedMenu.push(this.pendingDish);
+		this.setPendingDish(undefined, undefined);
 		notifyObservers(this.selectedMenu);
 	}
 
 	//Removes dish from menu
-	this.removeDishFromMenu = function(type) {
+	this.removeDishFromMenuType = function(type) {
 		var removeIndex = -1;
 		for (var i = 0; i < this.selectedMenu.length; i++) {
-			if (this.selectedMenu[i].type == type) {
+			if (this.selectedMenu[i].dishTypes[0] == type) {
+				removeIndex = i;
+			}
+		}
+		if(removeIndex > -1) {
+			this.selectedMenu.splice(removeIndex, 1);
+		}
+		notifyObservers(this.selectedMenu);
+	}
+
+	this.removeDishFromMenuId = function(id) {
+		var removeIndex = -1;
+		for (var i = 0; i < this.selectedMenu.length; i++) {
+			if (this.selectedMenu[i].id == id) {
 				removeIndex = i;
 			}
 		}
@@ -118,31 +141,52 @@ var DinnerModel = function() {
 	//function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")
 	//you can use the filter argument to filter out the dish by name or ingredient (use for search)
 	//if you don't pass any filter all the dishes will be returned
-	this.getAllDishes = function (type,filter) {
-	  return dishes.filter(function(dish) {
-		var found = true;
-		if(filter){
-			found = false;
-			dish.ingredients.forEach(function(ingredient) {
-				if(ingredient.name.indexOf(filter)!=-1) {
-					found = true;
-				}
-			});
-			if(dish.name.indexOf(filter) != -1)
-			{
-				found = true;
-			}
+	this.getAllDishes = function (dishType, filter, cb, cbError) {
+		if( dishType != "None") {
+		  $.ajax({
+		  	url: apiURL + searchURL,
+		  	headers: {
+		  		"X-Mashape-Key": apiKey
+		  	},
+		  	data: {
+		  		query: filter,
+		  		type: dishType
+		  	},
+		  	success: function(data) {
+		  		cb(data);
+		  	},
+		  	error: function(data) {
+		  		cbError();
+		  	}
+
+		  })
 		}
-	  	return dish.type == type && found;
-	  });	
+		else {
+			cb(undefined);
+		}
 	}
 
 	//function that returns a dish of specific ID
-	this.getDish = function (id) {
-	  for(key in dishes){
-			if(dishes[key].id == id) {
-				return dishes[key];
-			}
+	this.getDish = function (id, cb, cbError) {
+		if (id == this.pendingDishId && this.pendingDish != undefined) {
+			cb(this.pendingDish);
+		}
+		else {
+		   $.ajax({
+		  	url: apiURL + recipeInfoStartURL + id + recipeInfoEndURL,
+		  	headers: {
+		  		"X-Mashape-Key": apiKey
+		  	},
+		  	success: function(data) {
+		  		self.pendingDish = data;
+		  		self.pendingDishId = data.id;
+		  		cb(data);
+		  	},
+		  	error: function(data) {
+		  		cbError();
+		  	}
+
+		  })
 		}
 	}
 

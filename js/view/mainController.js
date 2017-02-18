@@ -29,19 +29,18 @@ var MainController = function(mainBody, startScreenView, menuSummaryView, filter
  		filteredDishesViewContainer.find("#filteredDishes").find("img").click(function() {
  		filteredDishesViewContainer.css("display", "none");
  		dishDetailsViewContainer.css("display", "block");
- 		model.setPendingDishId(this.id);
+ 		model.setPendingDish(this.id, undefined);
  	})
  	});
 
  	dishDetailsViewContainer.find("#backButton").click(function() {
  		filteredDishesViewContainer.css("display", "block");
  		dishDetailsViewContainer.css("display", "none");
- 		model.setPendingDishId(undefined);
+ 		model.setPendingDish(undefined, undefined);
  	});
 
  	dishDetailsViewContainer.find("#confirmButton").click(function() {
  		model.addDishToMenu(model.getPendingDishId());
- 		model.setPendingDishId(undefined);
 
  		filteredDishesViewContainer.css("display", "block");
  		dishDetailsViewContainer.css("display", "none");	

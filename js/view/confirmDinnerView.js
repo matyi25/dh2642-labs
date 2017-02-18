@@ -15,14 +15,14 @@ var ConfirmDinnerView = function (container, model) {
     var fullMenu = model.getFullMenu();
     for (var i = 0; i < fullMenu.length; i++) {
       var dishPrice = 0;
-      for (var j = 0; j < fullMenu[i].ingredients.length; j++) {
-        dishPrice = dishPrice + fullMenu[i].ingredients[j].price;
+      for (var j = 0; j < fullMenu[i].extendedIngredients.length; j++) {
+        dishPrice = dishPrice + fullMenu[i].extendedIngredients[j].amount;
       }
 
       var dishImageSection = "<div class=\"col-md-2\" align=\"center\">\
-              <img src=\"images/" + fullMenu[i].image + "\"\
+              <img src=\"" + fullMenu[i].image + "\"\
               class=\"img-responsive\">\
-              <p id=\"dishNameRow\" style=\"text-align: center\"><b>" + fullMenu[i].name + "</b></p>\
+              <p id=\"dishNameRow\" style=\"text-align: center\"><b>" + fullMenu[i].title + "</b></p>\
               <div class=\"row\">\
                 <div class=\"col-md-11\" style=\"text-align: right\">"+ dishPrice * model.getNumberOfGuests() + " SEK</div>\
                 <div class=\"col-md-1\"></div>\

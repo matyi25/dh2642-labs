@@ -1,5 +1,6 @@
 var MenuSummaryView = function (container, model) {
 	var menuSummaryView = container;
+	var self = this;
 	
 	this.getView = function () {
 		return menuSummaryView;
@@ -7,8 +8,8 @@ var MenuSummaryView = function (container, model) {
 
 	this.calcPrice = function(dish) {
 		var price = 0;
-		for (var i = 0; i < dish.ingredients.length; i++) {
-				price = dish.ingredients[i].price + price;
+		for (var i = 0; i < dish.extendedIngredients.length; i++) {
+				price = dish.extendedIngredients[i].amount + price;
 			}
 		return price * model.getNumberOfGuests();
 	}
@@ -24,13 +25,13 @@ var MenuSummaryView = function (container, model) {
 		menuSummaryView.find("#selectedDishesList").empty();
 
 		for (i=0; i<menuDishesList.length; i++) {
-			actualType = menuDishesList[i].type;
-			var menuDishesListSection = "<div class=\"row\" id=\""+ actualType+ "Row\" style=\"background-color:#f5f5ef;display:block\">\
+			actualId = menuDishesList[i].id;
+			var menuDishesListSection = "<div class=\"row\" id=\""+ actualId+ "Row\" style=\"background-color:#f5f5ef;display:block\">\
               <div class=\"col-md-6\">\
-                <a><h4 id=\""+actualType+"\">"+menuDishesList[i].name+"</h4></a>\
+                <a><h4 id=\""+actualId+"\">"+menuDishesList[i].title+"</h4></a>\
               </div>\
               <div class=\"col-md-3\">\
-                <h4 id=\""+actualType+"Cost\">"+this.calcPrice(menuDishesList[i])+"</h4>\
+                <h4 id=\""+actualId+"Cost\">"+this.calcPrice(menuDishesList[i])+"</h4>\
               </div>\
               <div class=\"col-md-3\">\
                 <h4>SEK</h4>\
@@ -42,16 +43,27 @@ var MenuSummaryView = function (container, model) {
         var pendingCost = 0;
         var pendingName = "Pending"
 		if (pendingDishId != undefined) {
-			oldDish = model.getSelectedDish(model.getDish(pendingDishId).type);
-			var pendingDish = model.getDish(pendingDishId);
+			model.getDish(pendingDishId, function(pendingDish) {
+				oldDish = model.getSelectedDish(pendingDish.dishTypes[0]);
 
-			pendingCost = this.calcPrice(pendingDish);
-			pendingName = pendingDish.name;
+				pendingCost = self.calcPrice(pendingDish);
+				pendingName = pendingDish.title;
+				self.pendingSectionFill(pendingName, pendingCost, oldDish);
+			}, function() {
+				$("body").removeClass("loading");
+				alert("Data retrieval was faulty");
+			});
+		}
+		else {
+			this.pendingSectionFill(pendingName, pendingCost, oldDish);
 		}
 
+	}
+
+	this.pendingSectionFill = function(pendingName, pendingCost, oldDish) {
 		var menuPendingDishSection = "<div class=\"row\" id=\"pendingRow\" style=\"background-color:#f5f5ef;display:block\">\
               <div class=\"col-md-6\">\
-                <a><h4 id=\"pendingName\">"+pendingName+"</h4></a>\
+                <h4 id=\"pendingName\">"+pendingName+"</h4>\
               </div>\
               <div class=\"col-md-3\">\
                 <h4 id=\"pendingCost\">"+pendingCost+"</h4>\
@@ -71,6 +83,7 @@ var MenuSummaryView = function (container, model) {
 		}
 
 		menuSummaryView.find("#selectedDishesList").trigger("contentchanged");
+
 	}
 
 	model.addObserver(this);
